@@ -176,7 +176,8 @@
             resultDiv.innerHTML = "<h2>Results</h2>";
 
             let scoreDiv = document.createElement("div");
-            scoreDiv.innerHTML = "Score: " + score;
+            let percentage = (score / selectedValue) * 100;
+            scoreDiv.innerHTML = "Score: " + score + "(" + percentage + "%)";
             resultDiv.appendChild(scoreDiv);
 
             let answersDiv = document.createElement("div");
@@ -189,7 +190,7 @@
                 answerDiv.innerHTML += "Correct: " + correctAnswers[i] + "<br><br>";
                 answersDiv.appendChild(answerDiv);
             }
-
+            
             document.body.appendChild(resultDiv);
             document.body.appendChild(answersDiv);
         });
