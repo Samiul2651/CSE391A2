@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Page with Text Box</title>
+</head>
+<body>
+    <textarea placeholder="Enter text here" class="fortuneText"></textarea>
+    <button onclick="getFortune()">Get Fortune</button>
+    <br>
+    <a href="./convert.html">Convert</a>
+    <a href="./quiz.html">Quiz</a>
+</body>
+<script>
+    const fortunes = [
+        "You will find a new opportunity that brings great joy.",
+        "Success is on the horizon. Stay determined.",
+        "A pleasant surprise awaits you in the near future.",
+        "Today is a good day to embark on a new adventure.",
+        "Your hard work will soon pay off in a way you never imagined.",
+        "Someone close to you has a secret they’re ready to share.",
+        "A positive mindset will lead you to wonderful places.",
+        "An unexpected encounter will bring you great happiness.",
+        "Trust your intuition; it will guide you to success.",
+        "Good news will come to you by mail."
+    ];
+    window.onload = () => {
+        getFortune();
+    }
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     getFortune();
+    // });
+    getFortune = () => {
+        const randomIndex = Math.floor(Math.random() * fortunes.length);
+        const fortune = fortunes[randomIndex];
+        document.querySelector('.fortuneText').value = fortune;
+    }
+
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <form>
+        
+        <label for="usd">USD Rate:</label>
+        <input type="number" id="usdRate" placeholder="0" />
+
+        <label for="gbp">GBP Rate:</label>
+        <input type="number" id="gbpRate" placeholder="0"   />
+
+        <label for="cad">CAD Rate:</label>
+        <input type="number" id="cadRate" placeholder="0"   />
+
+        <label for="eur">EUR Rate:</label>
+        <input type="number" id="eurRate" placeholder="0"  />
+
+        <label for="aud">AUD Rate:</label>
+        <input type="number" id="audRate" placeholder="0" />
+
+    </form>
+
+    <script>
+        const usd = [1, 0.49246, 0.98054, 0.70641, 1.13262];
+        const gbp = usd.map(rate => rate / 0.49246);
+        const cad = usd.map(rate => rate / 0.98054);
+        const eur = usd.map(rate => rate / 0.70641);
+        const aud = usd.map(rate => rate / 1.13262);
+        function convertForUsd(){
+            const usdRate = document.getElementById('usdRate').value;
+            document.getElementById('gbpRate').value = usdRate * usd[1];
+            document.getElementById('cadRate').value = usdRate * usd[2];
+            document.getElementById('eurRate').value = usdRate * usd[3];
+            document.getElementById('audRate').value = usdRate * usd[4];
+        
+        }
+        function convertForGbp(){
+            const gbpRate = document.getElementById('gbpRate').value;
+            document.getElementById('usdRate').value = gbpRate * gbp[1];
+            document.getElementById('cadRate').value = gbpRate * (usd[2] / gbp[1]);
+            document.getElementById('eurRate').value = gbpRate * (usd[3] / gbp[1]);
+            document.getElementById('audRate').value = gbpRate * (usd[4] / gbp[1]);
+        }
+
+        function convertForCad(){
+            const cadRate = document.getElementById('cadRate').value;
+            document.getElementById('usdRate').value = cadRate * cad[2];
+            document.getElementById('gbpRate').value = cadRate * (gbp[1] / cad[2]);
+            document.getElementById('eurRate').value = cadRate * (usd[3] / cad[2]);
+            document.getElementById('audRate').value = cadRate * (usd[4] / cad[2]);
+        }
+
+        function convertForEur(){
+            const eurRate = document.getElementById('eurRate').value;
+            document.getElementById('usdRate').value = eurRate * eur[3];
+            document.getElementById('gbpRate').value = eurRate * (gbp[1] / eur[3]);
+            document.getElementById('cadRate').value = eurRate * (cad[2] / eur[3]);
+            document.getElementById('audRate').value = eurRate * (usd[4] / eur[3]);
+        }
+
+        function convertForAud(){
+            const audRate = document.getElementById('audRate').value;
+            document.getElementById('usdRate').value = audRate * aud[4];
+            document.getElementById('gbpRate').value = audRate * (gbp[1] / aud[4]);
+            document.getElementById('cadRate').value = audRate * (cad[2] / aud[4]);
+            document.getElementById('eurRate').value = audRate * (eur[3] / aud[4]);
+        }
+        function convertCurrency(event, index) {
+            if(index == 0){
+                convertForUsd();
+            }else if(index == 1){
+                convertForGbp();
+            }else if(index == 2){
+                convertForCad();
+            }else if(index == 3){
+                convertForEur();
+            }else{
+                convertForAud();
+            }
+        }
+
+        document.getElementById('usdRate').addEventListener('input', (event) => convertCurrency(event, 0));
+        document.getElementById('gbpRate').addEventListener('input', (event) => convertCurrency(event, 1));
+        document.getElementById('cadRate').addEventListener('input', (event) => convertCurrency(event, 2));
+        document.getElementById('eurRate').addEventListener('input', (event) => convertCurrency(event, 3));
+        document.getElementById('audRate').addEventListener('input', (event) => convertCurrency(event, 4));
+    </script>
+</body>
+</html>
