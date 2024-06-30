@@ -1,96 +1,227 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fortune</title>
+    <title>Quiz</title>
     <style>
-        .title {
-            background-color: #007bff;
-            border: 10px solid #007bff;
-            border-radius: 10px;
-        }
         .container {
             max-width: 600px; 
             margin: 20px auto;
             padding: 20px;
-            border: 10px solid #0c0546;
+            border: 10px solid rgb(17, 17, 17);
             border-radius: 10px;
+            background-color: #b0b317;
         }
-        
+        .question{
+            font-weight: bold;
+        }
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
+            line-height: 1.6;
             padding: 20px;
+            background-color: aqua;
         }
-        .fortuneText {
-            width: 300px;
-            height: 100px;
-            padding: 10px;
-            margin: 10px;
+        h1, h2, h3 {
+            margin-bottom: 10px;
+        }
+        label {
+            margin-left: 10px;
+        }
+        select, button {
             font-size: 16px;
-            border: 5px solid #110b0b;
-            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 10px;
         }
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007bff;
+            background-color: #3551ad;
             color: white;
-            border: none;
-            border-radius: 5px;
+            border: 10 px;
+            cursor: pointer;
+            text-align: center;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #0d0a9b;
         }
-        a {
-            margin: 0px 10px;
-            padding: 10px 10px;
-            color: white;
-            text-decoration: white;
-            background-color:  #007bff;
-            
+        .quiz-question {
+            margin-bottom: 15px;
         }
-        a:hover {
-            text-decoration: underline;
-            background-color: #0056b3;
+        .quiz-options {
+            margin-left: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="title">
-        <h1>Fortune Reader</h1>
-    </div>
-    <div class="container"> 
-        <textarea placeholder="Enter text here" class="fortuneText"></textarea>
-        <button onclick="getFortune()">Get Fortune</button>
-        <br>
-        <br>
-        <a href="./convert.html">Convert</a>
-        <a href="./quiz.html">Quiz</a>
-    </div>
-</body>
+    <h1>Take a Quiz</h1>
+    <label for="options">Select the number of questions:</label>
+    <select id="options">
+        <option value="0">choose</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
 <script>
-    const fortunes = [
-        "You will find a new opportunity that brings great joy.",
-        "Success is on the horizon. Stay determined.",
-        "A pleasant surprise awaits you in the near future.",
-        "Today is a good day to embark on a new adventure.",
-        "Your hard work will soon pay off in a way you never imagined.",
-        "Someone close to you has a secret they’re ready to share.",
-        "A positive mindset will lead you to wonderful places.",
-        "An unexpected encounter will bring you great happiness.",
-        "Trust your intuition; it will guide you to success.",
-        "Good news will come to you by mail."
+    const quizQuestions = [
+        {
+            question: "What is the capital of France?",
+            options: ["Berlin", "Madrid", "Paris", "Lisbon"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "Which planet is known as the Red Planet?",
+            options: ["Earth", "Mars", "Jupiter", "Venus"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "What is the largest ocean on Earth?",
+            options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+            correctAnswer: "Pacific Ocean"
+        },
+        {
+            question: "In which year did the Titanic sink?",
+            options: ["1912", "1905", "1920", "1898"],
+            correctAnswer: "1912"
+        },
+        {
+            question: "Who wrote 'Romeo and Juliet'?",
+            options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+            correctAnswer: "William Shakespeare"
+        },
+        {
+            question: "What is the smallest prime number?",
+            options: ["0", "1", "2", "3"],
+            correctAnswer: "2"
+        },
+        {
+            question: "What is the square root of 64?",
+            options: ["6", "7", "8", "9"],
+            correctAnswer: "8"
+        },
+        {
+            question: "Which element has the chemical symbol 'O'?",
+            options: ["Oxygen", "Gold", "Silver", "Osmium"],
+            correctAnswer: "Oxygen"
+        },
+        {
+            question: "What is the capital city of Japan?",
+            options: ["Seoul", "Beijing", "Bangkok", "Tokyo"],
+            correctAnswer: "Tokyo"
+        },
+        {
+            question: "How many continents are there on Earth?",
+            options: ["5", "6", "7", "8"],
+            correctAnswer: "7"
+        }
     ];
-    
-    window.onload = () => {
-        getFortune();
+
+    function getRandomValues(count, min, max) {
+        const values = [];
+        while (values.length < count) {
+            const randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+            if (!values.includes(randomValue)) {
+                values.push(randomValue);
+            }
+        }
+        return values;
     }
+    document.getElementById("options").addEventListener("click", function() {
+        const selectedValue = document.getElementById("options").value;
+        if(selectedValue == 0)return;
+        document.body.innerHTML = "";
+        const container = document.createElement("div");
+        container.classList.add("container");
+        const uniqueRandomValues = getRandomValues(selectedValue, 0, 9);
+        
+        console.log(uniqueRandomValues);
+        let Questions = [];
+        let answers = [];
+        let correct = [];
+        let correctAnswers = [];
+        for (let i = 0; i < selectedValue; i++) {
+            const question = quizQuestions[uniqueRandomValues[i]];
+            const div = document.createElement("div");
+            const span = document.createElement("span");
+            span.classList.add("question");
+            span.innerHTML =(i+1) + ". " + question.question;
+            div.appendChild(span);
+            const options = question.options;
+            const answer = question.correctAnswer;
+            div.appendChild(document.createElement("br"));
+            options.forEach((option) => {
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = question.question;
+                radio.value = option;
+                div.appendChild(radio);
+                const label = document.createElement("label");
+                label.innerHTML = option;
+                div.appendChild(label);
+                div.appendChild(document.createElement("br"));
+            });
+            div.appendChild(document.createElement("br"));
+            container.appendChild(div);
+        }
+        const btn = document.createElement("button");
+        btn.innerHTML = "Submit";
+        
+        container.appendChild(document.createElement("br"));
+        container.appendChild(btn);
+        btn.addEventListener("click", function() {
+            let score = 0;
+            let index = 0;
+            for (let i = 0; i < selectedValue; i++) {
+                const question = quizQuestions[uniqueRandomValues[i]];
+                const radios = document.getElementsByName(question.question);
+                let selectedValue;
+                Questions.push(question.question);
+                radios.forEach((radio) => {
+                    if (radio.checked) {
+                        selectedValue = radio.value;
+                        answers.push(selectedValue);
+                    }
+                });
+                if(answers.length < i+1){
+                    answers.push("Not Answered");
+                }
+                if (selectedValue === question.correctAnswer) {
+                    correct.push(true);
+                    score++;
+                }
+                else {
+                    correct.push(false);
+                }
+                correctAnswers.push(question.correctAnswer);
+            }
+            document.body.innerHTML = "";
+            const resultDiv = document.createElement("div");
+            const container = document.createElement("div");
+            container.classList.add("container");
+            resultDiv.innerHTML = "<h2>Results</h2>";
+            
+            let scoreDiv = document.createElement("div");
+            let percentage = (score / selectedValue) * 100;
+            scoreDiv.innerHTML = "<span class='question'>Score: " + score + "(" + percentage + "%)</span>";
+            resultDiv.appendChild(scoreDiv);
+
+            let answersDiv = document.createElement("div");
+            answersDiv.innerHTML = "<h3>Answers</h3>";
+
+            for(let i = 0;i < selectedValue; i++){
+                let answerDiv = document.createElement("div");
+                answerDiv.innerHTML = "<span class='question'>Question: </span>" + Questions[i] + "<br>";
+                answerDiv.innerHTML += "<span class='question'>Selected Option: </span>" + answers[i] + "<br>";
+                answerDiv.innerHTML += "<span class='question'>Correct: </span>" + correctAnswers[i] + "<br><br>";
+                answersDiv.appendChild(answerDiv);
+            }
+            
+            container.appendChild(resultDiv);
+            container.appendChild(answersDiv);
+            document.body.appendChild(container);
+        });
+        document.body.appendChild(container);
+    });
     
-    function getFortune() {
-        const randomIndex = Math.floor(Math.random() * fortunes.length);
-        const fortune = fortunes[randomIndex];
-        document.querySelector('.fortuneText').value = fortune;
-    }
 </script>
+</body>
 </html>
