@@ -2,13 +2,72 @@
 <html>
 <head>
     <title>Fortune</title>
+    <style>
+        .title {
+            background-color: #007bff;
+            border: 10px solid #007bff;
+            border-radius: 10px;
+        }
+        .container {
+            max-width: 600px; 
+            margin: 20px auto;
+            padding: 20px;
+            border: 10px solid #0c0546;
+            border-radius: 10px;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .fortuneText {
+            width: 300px;
+            height: 100px;
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border: 5px solid #110b0b;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            margin: 0px 10px;
+            padding: 10px 10px;
+            color: white;
+            text-decoration: white;
+            background-color:  #007bff;
+            
+        }
+        a:hover {
+            text-decoration: underline;
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <textarea placeholder="Enter text here" class="fortuneText"></textarea>
-    <button onclick="getFortune()">Get Fortune</button>
-    <br>
-    <a href="./convert.html">Convert</a>
-    <a href="./quiz.html">Quiz</a>
+    <div class="title">
+        <h1>Fortune Reader</h1>
+    </div>
+    <div class="container"> 
+        <textarea placeholder="Enter text here" class="fortuneText"></textarea>
+        <button onclick="getFortune()">Get Fortune</button>
+        <br>
+        <br>
+        <a href="./convert.html">Convert</a>
+        <a href="./quiz.html">Quiz</a>
+    </div>
 </body>
 <script>
     const fortunes = [
@@ -23,17 +82,15 @@
         "Trust your intuition; it will guide you to success.",
         "Good news will come to you by mail."
     ];
+    
     window.onload = () => {
         getFortune();
     }
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     getFortune();
-    // });
-    getFortune = () => {
+    
+    function getFortune() {
         const randomIndex = Math.floor(Math.random() * fortunes.length);
         const fortune = fortunes[randomIndex];
         document.querySelector('.fortuneText').value = fortune;
     }
-
 </script>
 </html>
